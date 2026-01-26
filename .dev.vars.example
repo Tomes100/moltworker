@@ -3,10 +3,13 @@
 
 ANTHROPIC_API_KEY=sk-ant-...
 
-# Required for local dev - binds to 0.0.0.0 for Docker networking
-CLAWDBOT_BIND_MODE=lan
+# Required for local dev - enables LAN binding (0.0.0.0) for Docker networking
+# and allows insecure auth for the Control UI
+CLAWDBOT_DEV_MODE=true
 
-# Optional
-# CLAWDBOT_GATEWAY_TOKEN=optional-token
+# Optional - set a fixed token instead of auto-generated
+CLAWDBOT_GATEWAY_TOKEN=dev-token-123
+
+# Optional chat channels
 # TELEGRAM_BOT_TOKEN=optional
 # DISCORD_BOT_TOKEN=optional

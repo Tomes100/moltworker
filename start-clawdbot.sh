@@ -62,6 +62,13 @@ config.gateway.mode = 'local';
 if (process.env.CLAWDBOT_GATEWAY_TOKEN) {
     config.gateway.auth = config.gateway.auth || {};
     config.gateway.auth.token = process.env.CLAWDBOT_GATEWAY_TOKEN;
+    config.gateway.auth.mode = 'token';  // Token-only auth (no device pairing)
+}
+
+// Allow insecure auth ONLY for local dev (when CLAWDBOT_DEV_MODE=true)
+if (process.env.CLAWDBOT_DEV_MODE === 'true') {
+    config.gateway.controlUi = config.gateway.controlUi || {};
+    config.gateway.controlUi.allowInsecureAuth = true;
 }
 
 // Telegram configuration
@@ -113,6 +120,10 @@ else
     echo "Gateway token (generated): $GATEWAY_TOKEN"
 fi
 # Bind mode: 'lan' for local dev, 'auto' for production
-BIND_MODE="${CLAWDBOT_BIND_MODE:-auto}"
-echo "Bind mode: $BIND_MODE"
+if [ "$CLAWDBOT_DEV_MODE" = "true" ]; then
+    BIND_MODE="lan"
+else
+    BIND_MODE="auto"
+fi
+echo "Dev mode: ${CLAWDBOT_DEV_MODE:-false}, Bind mode: $BIND_MODE"
 exec clawdbot gateway --port 18789 --verbose --allow-unconfigured --bind "$BIND_MODE" --token "$GATEWAY_TOKEN"

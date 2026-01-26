@@ -43,12 +43,14 @@ cp .dev.vars.example .dev.vars
 npm run dev
 ```
 
-### Local vs Production Binding
+### Local vs Production Mode
 
-The gateway needs different `--bind` settings controlled by `CLAWDBOT_BIND_MODE`:
+Set `CLAWDBOT_DEV_MODE=true` for local development. This:
 
-- **Local dev**: `CLAWDBOT_BIND_MODE=lan` - binds to 0.0.0.0 which works with Docker networking
-- **Production**: `CLAWDBOT_BIND_MODE=auto` (default) - lets clawdbot detect the right interface
+- Binds to `0.0.0.0` (LAN mode) which works with Docker networking
+- Allows insecure auth for the Control UI
+
+In production (when `CLAWDBOT_DEV_MODE` is not set), the gateway uses `--bind auto` and requires secure auth.
 
 This is already configured in `.dev.vars.example`. Just copy it to `.dev.vars` for local dev.
 
@@ -78,7 +80,7 @@ Clawdbot configuration is built at container startup:
 |----------|-------------|-------|
 | `ANTHROPIC_API_KEY` | (env var) | Clawdbot reads directly from env |
 | `CLAWDBOT_GATEWAY_TOKEN` | `--token` flag | If not set, random token is generated |
-| `CLAWDBOT_BIND_MODE` | `--bind` flag | `lan` for local dev, `auto` for production (default) |
+| `CLAWDBOT_DEV_MODE` | `--bind` flag + auth | Set to `true` for local dev (LAN binding + insecure auth) |
 | `TELEGRAM_BOT_TOKEN` | `channels.telegram.botToken` | |
 | `DISCORD_BOT_TOKEN` | `channels.discord.token` | |
 | `SLACK_BOT_TOKEN` | `channels.slack.botToken` | |
