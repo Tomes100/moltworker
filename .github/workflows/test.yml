@@ -42,6 +42,17 @@ jobs:
         config:
           - name: base
             env: {}
+          - name: anthropic-direct
+            env:
+              USE_ANTHROPIC_DIRECT: "true"
+          - name: aig-authenticated
+            env:
+              USE_ANTHROPIC_DIRECT: "true"
+              USE_AI_GATEWAY: "true"
+          - name: aig-key-no-url
+            env:
+              USE_ANTHROPIC_DIRECT: "true"
+              USE_AI_GATEWAY_KEY_ONLY: "true"
           - name: telegram
             env:
               TELEGRAM_BOT_TOKEN: "fake-telegram-bot-token-for-e2e"
